@@ -20,18 +20,18 @@ cylHeightExt = .1; // for overcutting on differences so they render correctly, n
 $fn = 64; // [24:low quality, 48:development, 64:production]
 
 /* [ublox-neo6m] */
-ubloxWidth = 20.5 + iFitAdjust * 2;
-ubloxLength = 25.5 + iFitAdjust * 2;
+ubloxWidth = 21 + iFitAdjust * 2;
+ubloxLength = 26 + iFitAdjust * 2;
 ubloxHeight = 5;
 
 /* [plate] */
-mountHoleSep = 60;
+mountHoleSep = 58;
 mountHoleD = 3 + iFitAdjust;
 plateLW = mountHoleSep + (2 * mountHoleD) * 2;
 
 /* [buzzerMount] */
-buzzerD = 12 + iFitAdjust;
-buzzerHeight = 10 + iFitAdjust;
+buzzerD = 13 + iFitAdjust;
+buzzerHeight = 8 + iFitAdjust;
 buzzerMountLip = 1;
 
 render_part();
@@ -73,7 +73,7 @@ module plate() {
                 ubloxHeight + plateThickness], center=true);
             translate([0, ubloxLength / 2 + plateThickness - 1, 2 + plateThickness])
                 cube([4,
-                    6,
+                    8,
                     10], center=true);
 	}
 }
@@ -102,7 +102,7 @@ module ubloxNeo6mMount() {
                     ubloxHeight + plateThickness], center=true);
             translate([0, ubloxLength / 2 + plateThickness - 1, 2 + plateThickness])
                 cube([4,
-                    6,
+                    8,
                     10], center=true);
         }
     }
