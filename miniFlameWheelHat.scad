@@ -27,10 +27,11 @@ ubloxHeight = 5;
 /* [plate] */
 mountHoleSep = 58;
 mountHoleD = 3 + iFitAdjust;
+mountScrewHeadD = 5;
 plateLW = mountHoleSep + (2 * mountHoleD) * 2;
 
 /* [buzzerMount] */
-buzzerD = 13 + iFitAdjust;
+buzzerD = 12.2 + iFitAdjust;
 buzzerHeight = 8 + iFitAdjust;
 buzzerMountLip = 1;
 
@@ -60,12 +61,22 @@ module assembly() {
 
 module plate() {
 	difference() {
-		translate([0, 0, plateThickness / 2])
-			roundCornersCube(plateLW, plateLW, plateThickness, 8);
+        union() {
+            translate([0, 0, plateThickness / 2])
+                roundCornersCube(plateLW, plateLW, plateThickness, 8);
+            for (i = [-1, 1])
+                for (j = [-1, 1]) {
+                    translate([i * mountHoleSep / 2, j * mountHoleSep / 2, plateThickness / 2 - 2 * plateThickness])
+                        cylinder(h = 4 * plateThickness + cylHeightExt, d=mountScrewHeadD * 1.5, center=true);
+                }
+        }
 		for (i = [-1, 1])
-			for (j = [-1, 1])
+			for (j = [-1, 1]) {
 				translate([i * mountHoleSep / 2, j * mountHoleSep / 2, plateThickness / 2])
-					cylinder(h=plateThickness + cylHeightExt, d=mountHoleD, center=true);
+					cylinder(h=10 * plateThickness + cylHeightExt, d=mountHoleD, center=true);
+				translate([i * mountHoleSep / 2, j * mountHoleSep / 2, plateThickness / 2])
+					cylinder(h=4 * plateThickness + cylHeightExt, d=mountScrewHeadD, center=true);
+            }
 		translate([0, -ubloxLength, -buzzerHeight])
 			cylinder(h=buzzerHeight + plateThickness + cylHeightExt, d=buzzerD + 2 * plateThickness);
             cube([ubloxWidth + 2 * plateThickness,
@@ -100,6 +111,10 @@ module ubloxNeo6mMount() {
                 cube([ubloxWidth,
                     ubloxLength,
                     ubloxHeight + plateThickness], center=true);
+            translate([0, -ubloxLength / 5, plateThickness + .5])
+                cube([ubloxWidth * .75,
+                    ubloxLength / 2,
+                    3 * ubloxHeight + plateThickness], center=true);
             translate([0, ubloxLength / 2 + plateThickness - 1, 2 + plateThickness])
                 cube([4,
                     8,
